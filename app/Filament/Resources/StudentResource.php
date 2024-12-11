@@ -2,11 +2,11 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\EducationalGroupResource\Pages;
-use App\Filament\Resources\EducationalGroupResource\RelationManagers;
-use App\Models\EducationalGroup;
+use App\Filament\Resources\StudentResource\Pages;
+use App\Filament\Resources\StudentResource\RelationManagers;
+use App\Filament\Resources\StudentResource\RelationManagers\AttendancesRelationManager;
+use App\Models\Student;
 use Filament\Forms;
-use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -17,9 +17,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class EducationalGroupResource extends Resource
+class StudentResource extends Resource
 {
-    protected static ?string $model = EducationalGroup::class;
+    protected static ?string $model = Student::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -27,17 +27,21 @@ class EducationalGroupResource extends Resource
     {
         return $form
             ->schema([
-                TextInput::make('name'),
-                DatePicker::make('start_date'),
-                DatePicker::make('end_date'),
-                Select::make('program_id')
-                    ->relationship('program', 'name')
+                TextInput::make('first_name'),
+                TextInput::make('last_name'),
+                TextInput::make('oib'),
+                Select::make('educational_group_id')
+                    ->relationship('educationalGroup', 'name')
+                    ->searchable()
+                    ->preload(),
+                Select::make('company_id')
+                    ->relationship('company', 'name')
+                    ->searchable()
+                    ->preload(),
+                Select::make('school_id')
+                    ->relationship('school', 'name')
                     ->searchable()
                     ->preload()
-                    ->createOptionForm(
-                        [TextInput::make('name'),
-                        TextInput::make('qualification'),]
-                    ),
             ]);
     }
 
@@ -45,7 +49,9 @@ class EducationalGroupResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('name')
+                TextColumn::make('first_name'),
+                TextColumn::make('last_name'),
+                TextColumn::make('educationalGroup.name')
             ])
             ->filters([
                 //
@@ -63,16 +69,16 @@ class EducationalGroupResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            AttendancesRelationManager::class,
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListEducationalGroups::route('/'),
-            'create' => Pages\CreateEducationalGroup::route('/create'),
-            'edit' => Pages\EditEducationalGroup::route('/{record}/edit'),
+            'index' => Pages\ListStudents::route('/'),
+            'create' => Pages\CreateStudent::route('/create'),
+            'edit' => Pages\EditStudent::route('/{record}/edit'),
         ];
     }
 }

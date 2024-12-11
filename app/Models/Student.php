@@ -14,4 +14,12 @@ class Student extends Model
         return $this->belongsTo(EducationalGroup::class);
     }
 
+    public function company(){
+        return $this->belongsTo(Company::class);
+    }
+
+    public function school(){
+        return $this->belongsTo(School::class);
+    }
+
 }
