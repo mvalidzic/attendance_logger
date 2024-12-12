@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\StudentService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +14,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(StudentService::class, function($app){
+            return new StudentService();
+        });
     }
 
     /**
