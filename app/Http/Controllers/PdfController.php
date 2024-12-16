@@ -18,13 +18,20 @@ class PdfController extends Controller
         $students = Student::all();
         $html = '';
         $resultArray = [];
+        /*$singleStudent = $this->studentService->prepareForPdf($students[0]);
+        return view('pdf', ['studentData' => $singleStudent]);*/
+        
         foreach($students as $student){
-            $resultArray[] = $this->studentService->prepareForPdf($student);
-            /*$studentName = $student->getAttribute('first_name');
-            $view = view('pdf', ['studentName' => $studentName]);
-            $html = $view->render();
-            $pdf = Pdf::loadHTML($html)->save(public_path() . '\pdfs\test'. $studentName .'.pdf');*/
+            $singleStudent = $this->studentService->prepareForPdf($student);
+            if($singleStudent['attendances']){
+                $studentName = $student->getAttribute('first_name');
+                $view = view('pdf', ['studentData' => $singleStudent]);
+                $html = $view->render();
+                $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
+                $pdf = Pdf::loadHTML($html)->save(public_path() . '\pdfs\test'. $studentName .'.pdf');
+            }
+            
         }
-        dd($resultArray);
+        return view('test');
     }
 }

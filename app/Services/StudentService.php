@@ -10,8 +10,12 @@ class StudentService {
         $start = new Carbon('first day of last month');
         $end = new Carbon ('last day of last month');
         $attendancesArray = [];
-        $attendances = $student->attendances()->where([['attendance_date', '>' , $start->format('Y-m-d')], ['attendance_date', '<=' , $end->format('Y-m-d')]])->get();
+        $attendances = $student->attendances()->where([['attendance_date', '>=' , $start->format('Y-m-d')], ['attendance_date', '<=' , $end->format('Y-m-d')]])->get();
         foreach($attendances as $attendance){
+            $rowspan = 1;
+            if($attendance->getAttribute('school_hours') && $attendance->getAttribute('company_hours')){
+                $rowspan = 2;
+            }
             //dd($attendance->school()->first()->getAttribute('address'));
             $singleAttendance = [
                 'school' => $attendance->school()->first()->getAttribute('name') . ', ' . $attendance->school()->first()->getAttribute('address'),
@@ -19,6 +23,7 @@ class StudentService {
                 'attendance_date' => $attendance->getAttribute('attendance_date'),
                 'school_hours' => $attendance->getAttribute('school_hours'),
                 'company_hours' => $attendance->getAttribute('company_hours'),
+                'rowspan' => $rowspan
             ];
             $attendancesArray[] = $singleAttendance;
         }
