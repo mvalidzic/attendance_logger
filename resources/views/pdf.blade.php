@@ -94,13 +94,13 @@ table tbody td {
     text-align: left;
 }
 
-table tbody tr:nth-child(odd) {
+/*table tbody tr:nth-child(odd) {
     background: #f9f9f9;
 }
 
 table tbody tr:nth-child(even) {
     background: #fff;
-}
+}*/
 
 table td:first-child {
     text-align: left;
@@ -141,7 +141,7 @@ footer {
     text-align: right;
 }
 
-    </style>
+</style>
     
     
 </head>
@@ -176,18 +176,16 @@ footer {
                     
                     @foreach ($studentData['attendances'] as $attendance)
                     <tr>
-                        <td rowspan="{{$attendance['rowspan']}}">{{$attendance['attendance_date']}}</td>
                         @if($attendance['school'] && $attendance['school_hours'])
-                            <td><strong>Škola:</strong> {{ $attendance['school']}}</td>
-                            <td>{{ $attendance['school_hours']}}</td>
+                                <td>{{$attendance['attendance_date']}}</td>
+                                <td><strong>Škola:</strong> {{ $attendance['school']}}</td>
+                                <td>{{ $attendance['school_hours']}}</td>
                         @endif
-                    </tr>
-                    <tr>
                         @if($attendance['company'] && $attendance['company_hours'])
-                            <td><strong>Praksa:</strong> {{$attendance['company']}}</td>
-                            <td>{{$attendance['company_hours']}}</td>
+                                <td><strong>Praksa:</strong> {{$attendance['company']}}</td>
+                                <td>{{$attendance['company_hours']}}</td>
                         @endif
-                    </tr>
+                    <tr>
                     @endforeach
                 </tbody>
             </table>

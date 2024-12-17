@@ -17,9 +17,6 @@ class PdfController extends Controller
     public function getAllPdfs(){
         $students = Student::all();
         $html = '';
-        $resultArray = [];
-        /*$singleStudent = $this->studentService->prepareForPdf($students[0]);
-        return view('pdf', ['studentData' => $singleStudent]);*/
         
         foreach($students as $student){
             $singleStudent = $this->studentService->prepareForPdf($student);
@@ -30,7 +27,6 @@ class PdfController extends Controller
                 $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
                 $pdf = Pdf::loadHTML($html)->save(public_path() . '\pdfs\test'. $studentName .'.pdf');
             }
-            
         }
         return view('test');
     }
