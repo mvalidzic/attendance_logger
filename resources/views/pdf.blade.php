@@ -22,7 +22,6 @@
              margin: 0 auto;
              padding: 12px;
          }
-
          /* HERO */
          header {
              display: flex;
