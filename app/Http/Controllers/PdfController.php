@@ -25,7 +25,7 @@ class PdfController extends Controller
                 $view = view('pdf', ['studentData' => $singleStudent]);
                 $html = $view->render();
                 $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
-                $pdf = Pdf::loadHTML($html)->save(public_path() . '\pdfs\'. $studentName .'.pdf');
+                $pdf = Pdf::loadHTML($html)->save(public_path() . '/pdfs/'. $studentName .'.pdf');
             }
         }
         return view('test');
