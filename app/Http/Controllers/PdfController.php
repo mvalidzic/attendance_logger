@@ -21,7 +21,7 @@ class PdfController extends Controller
         foreach($students as $student){
             $singleStudent = $this->studentService->prepareForPdf($student);
             if($singleStudent['attendances']){
-                $studentName = $student->getAttribute('first_name');
+                $studentName = $student->getAttribute('last_name') . '_' .$student->getAttribute('first_name'). '_' .$singleStudent['filename_month'];
                 $view = view('pdf', ['studentData' => $singleStudent]);
                 $html = $view->render();
                 $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');

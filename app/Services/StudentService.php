@@ -36,6 +36,7 @@ class StudentService {
             'end_date'  => $this->formatDate($student->educationalGroup()->first()->getAttribute('end_date')),
             'attendances' => $attendancesArray,
             'report_month' => $start->format('m/y'),
+            'filename_month' => $start->format('Y_m'),
             'today' => Carbon::now()->format('d.m.Y'),
             'principal' => $student->school()->first()->getAttribute('principal'),
         ];

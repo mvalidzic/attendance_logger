@@ -32,16 +32,16 @@
          }
 
          .header-logo {
-             max-width: 40px;
-             position: absolute;
+             max-width: 300px;
+             position: fixed;
              left: 10px;
              top: 2px;
              display: block;
          }
 
-         header h1 {
+         .header-text {
              font-size: 1.3rem;
-             margin: 0;
+             padding-top: 20px;
              color: #333;
              text-align: center;
          }
@@ -123,7 +123,7 @@
          }
 
          .footer-date img {
-             max-width: 80px;
+             max-width: 100px;
              margin-top: 5px;
          }
 
@@ -143,10 +143,12 @@
      <div class="container">
          <header>
              <div class="header-content">
-                 <img src="./hzz.png" alt="HZZ Logo" class="header-logo">
-                 <h1>Pučko otvoreno učilište Zagreb</h1>
+                 <img src="./logo.png" alt="HZZ Logo" class="header-logo">
+                 
              </div>
+             
          </header>
+         <h1 class="header-text">Pučko otvoreno učilište Zagreb</h1>
 
          <div class="student-section">
              <p><strong>Ime i prezime polaznika:</strong> {{
