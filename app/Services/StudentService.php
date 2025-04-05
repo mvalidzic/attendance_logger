@@ -49,4 +49,9 @@ class StudentService {
         $formattedDate = $exploded[2] . '.' . $exploded[1] . '.' . $exploded[0] . '.';
         return $formattedDate;
     }
+
+    public function getFilenameMonth() {
+        $start = new Carbon('first day of last month');
+        return $start->format('Y_m');
+    }
 }

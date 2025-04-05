@@ -10,3 +10,4 @@ Route::get('/', function () {
 
 Route::get('/test', [TestController::class, 'test']);
 Route::get('/pdf', [PdfController::class, 'getAllPdfs'] );
+Route::get('/pdf/{id}', [PdfController::class, 'printPdf'] )->name('pdf.print');
