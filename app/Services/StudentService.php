@@ -4,12 +4,18 @@ namespace App\Services;
 
 use App\Models\Student;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 use DateFormatService;
 
 class StudentService {
-    public function prepareForPdf(Student $student){
-        $start = new Carbon('first day of last month');
-        $end = new Carbon ('last day of last month');
+    public function prepareForPdf(Student $student, string $startMonth = 'last'){
+        if($startMonth == 'last'){
+            $start = new Carbon('first day of last month');
+            $end = new Carbon ('last day of last month');
+        } else {
+            $start = Carbon::now()->firstOfMonth();
+            $end = Carbon::now()->lastOfMonth();
+        }
         $attendancesArray = [];
         $attendances = $student->attendances()->where([['attendance_date', '>=' , $start->format('Y-m-d')], ['attendance_date', '<=' , $end->format('Y-m-d')]])->orderBy('attendance_date')->get();
         foreach($attendances as $attendance){
@@ -50,8 +56,29 @@ class StudentService {
         return $formattedDate;
     }
 
-    public function getFilenameMonth() {
+    public function getLastMonth() {
         $start = new Carbon('first day of last month');
         return $start->format('Y_m');
+    }
+
+    public function getCurrentMonth() {
+        $start = new Carbon('first day of current month');
+        return $start->format('Y_m');
+    }
+
+    public function generatePdfs(string $startMonth){
+        $students = Student::all();
+        $html = '';
+        
+        foreach($students as $student){
+            $singleStudent = $this->prepareForPdf($student, $startMonth);
+            if($singleStudent['attendances']){
+                $studentName = $student->getAttribute('last_name') . '_' .$student->getAttribute('first_name'). '_' .$singleStudent['filename_month'];
+                $view = view('pdf', ['studentData' => $singleStudent]);
+                $html = $view->render();
+                $html = mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8');
+                $pdf = Pdf::loadHTML($html)->save(public_path() . '/pdfs/'. $studentName .'.pdf');
+            }
+        }
     }
 }

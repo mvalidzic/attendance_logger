@@ -9,5 +9,6 @@ Route::get('/', function () {
 });
 
 Route::get('/test', [TestController::class, 'test']);
-Route::get('/pdf', [PdfController::class, 'getAllPdfs'] );
+Route::get('/pdf', [PdfController::class, 'getLastMonthPdfs'] );
+Route::get('/current-pdf', [PdfController::class, 'getCurrentMonthPdfs'] );
 Route::get('/pdf/{id}', [PdfController::class, 'printPdf'] )->name('pdf.print');
