@@ -62,7 +62,7 @@ class StudentService {
     }
 
     public function getCurrentMonth() {
-        $start = new Carbon('first day of current month');
+        $start = Carbon::now()->firstOfMonth();
         return $start->format('Y_m');
     }
 

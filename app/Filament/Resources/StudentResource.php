@@ -56,10 +56,14 @@ class StudentResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Action::make('print')
+                Action::make('Prethodni mjesec')
                 ->url(fn (Model $record): string => route('pdf.print', $record))
+                ->openUrlInNewTab(),
+                Action::make('Trenutni mjesec')
+                ->url(fn (Model $record): string => route('pdf.printCurrent', $record))
                 ->openUrlInNewTab()
             ])
+            
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
