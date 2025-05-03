@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\StudentResource\RelationManagers;
 
-use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -11,8 +10,6 @@ use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AttendancesRelationManager extends RelationManager
 {
@@ -44,13 +41,12 @@ class AttendancesRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('attendance_date')
             ->columns([
-                Tables\Columns\TextColumn::make('attendance_date'),
+                Tables\Columns\TextColumn::make('attendance_date')->sortable(),
                 TextColumn::make('school_hours'),
                 TextColumn::make('company_hours'),
                 TextColumn::make('company.name')
             ])
             ->filters([
-                //
             ])
             ->headerActions([
                 Tables\Actions\CreateAction::make(),
@@ -63,6 +59,8 @@ class AttendancesRelationManager extends RelationManager
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('attendance_date', 'desc')
+            ;
     }
 }
