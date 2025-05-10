@@ -183,7 +183,11 @@ $attendance['attendance_date'] }}</td>
                                  <td>{{ $attendance['school_hours'] }}</td>
                              </tr>
                              <tr>
-<td><strong>Praksa:</strong> {{ $attendance['company'] }}</td>
+                             @if($studentData['location'])
+                                    <td><strong>Praksa:</strong> {{ $attendance['company'] }}, {{$studentData['location']}}</td>  
+                                @else
+                                    <td><strong>Praksa:</strong> {{ $attendance['company'] }}</td>
+                                @endif
                                  <td>{{ $attendance['company_hours'] }}</td>
                              </tr>
                          @elseif ($attendance['school'] &&

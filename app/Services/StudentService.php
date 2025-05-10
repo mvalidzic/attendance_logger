@@ -33,6 +33,7 @@ class StudentService {
             ];
             $attendancesArray[] = $singleAttendance;
         }
+        
         $result = [
             'student_name' => $student->getAttribute('first_name') . ' ' . $student->getAttribute('last_name'),
             'oib' => $student->getAttribute('oib'),
@@ -45,6 +46,7 @@ class StudentService {
             'filename_month' => $start->format('Y_m'),
             'today' => Carbon::now()->format('d.m.Y'),
             'principal' => $student->school()->first()->getAttribute('principal'),
+            'location' => $student->getAttribute('location'),
         ];
         return $result;
        

@@ -39,7 +39,8 @@ class StudentResource extends Resource
                 Select::make('school_id')
                     ->relationship('school', 'name')
                     ->searchable()
-                    ->preload()
+                    ->preload(),
+                TextInput::make('location'),
             ]);
     }
 
